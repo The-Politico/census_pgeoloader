@@ -47,6 +47,7 @@ def mkdir(path):
         else:
             raise
 
+
 def download_file(url, temp):
     mkdir('{}'.format(temp))
     local_filename = os.path.join(temp, url.split('/')[-1])

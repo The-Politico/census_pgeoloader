@@ -14,7 +14,7 @@ setup(
     description="Load Census shapefiles into PostGIS",
     long_description=README,
     url=REPO_URL,
-    version='0.1.2',
+    version='0.1.3',
     py_modules=['census_pgeoloader'],
     install_requires=[
         'click',
