@@ -11,7 +11,10 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name="census_pgeoloader",
-    version='0.1.0',
+    description="Load Census shapefiles into PostGIS"
+    long_description=README,
+    url=REPO_URL,
+    version='0.1.1',
     py_modules=['census_pgeoloader'],
     install_requires=[
         'click',
