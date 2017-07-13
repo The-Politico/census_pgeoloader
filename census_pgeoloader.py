@@ -1,3 +1,4 @@
+import errno
 import os
 import subprocess
 import zipfile
@@ -37,8 +38,17 @@ API = {
 }
 
 
+def mkdir(path):
+    try:
+        os.makedirs(path)
+    except OSError as exc:
+        if exc.errno == errno.EEXIST and os.path.isdir(path):
+            pass
+        else:
+            raise
+
 def download_file(url, temp):
-    os.makedirs('{}'.format(temp), exist_ok=True)
+    mkdir('{}'.format(temp))
     local_filename = os.path.join(temp, url.split('/')[-1])
     r = requests.get(url, stream=True)
     with open(local_filename, 'wb') as f:
@@ -53,7 +63,7 @@ def unzip(filename):
     base_name = os.path.splitext(os.path.basename(filename))[0]
     write_dir = os.path.join(base_dir, base_name)
     zip_ref = zipfile.ZipFile(filename, 'r')
-    os.makedirs(write_dir, exist_ok=True)
+    mkdir(write_dir)
     zip_ref.extractall(write_dir)
     return os.path.join(write_dir, '{}.shp'.format(base_name))
 
