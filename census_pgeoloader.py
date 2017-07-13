@@ -20,6 +20,10 @@ class Shp2pgsqlException(Exception):
     pass
 
 
+class StateException(Exception):
+    pass
+
+
 GROUP = "group"
 BLOCK = "block"
 TRACT = "tract"
@@ -87,7 +91,7 @@ def load_into_db(shapefile, table, srid, cur):
     help='Name of table to create in DB. Default is "census_shapes".')
 @click.option(
     '--temp', '-p', default='./shapefiles',
-    help="Temporary directory to download files to. Default is \"./shapefiles\"")
+    help="Directory to download files to. Default is \"./shapefiles\"")
 @click.option(
     '--year', '-y', default='2016', help='Year. Default is \"2016\".')
 @click.option(
@@ -105,9 +109,17 @@ def load(table, temp, year, geo, srid, db, states):
     except:
         raise ConnectionException('Could not connect to PostgreSQL database.')
     cur = conn.cursor()
+
+    # Allow to specify all states.
+    if states[0] == '+':
+        states = [state.fips for state in us.states.STATES]
+
     prepare = True  # Use the first state to prepare the database table
     for state in states:
-        name = us.states.lookup(state).name
+        try:
+            name = us.states.lookup(state).name
+        except:
+            raise StateException('Can\'t find state "{}"'.format(state))
         fips = us.states.lookup(state).fips
         click.echo('Requesting {}'.format(name))
         zipfile = download_file(API[geo].format(year, year, fips), temp)

@@ -2,7 +2,7 @@
 
 # census_pgeoloader
 
-Command line utility to download Census TIGER/Line shapefiles from the U.S. Census Bureau and aggregate them into a single table in a PostGIS-enabled database.
+Command line utility to download Census TIGER/Line shapefiles by state from the U.S. Census Bureau and aggregate them into a single table in a PostGIS-enabled database.
 
 # Requirements
 
@@ -16,13 +16,13 @@ $ pip install census_pgeoloader
 
 # To use
 
-Pass a connection URI to your PostgreSQL database as well as the states you'd like to aggregate.
+Pass a connection URI to your PostgreSQL database as well as the states you'd like to aggregate. This will dowload tract-level shapefiles by default.
 
 ```bash
 $ pgeoloader postgres://postgres@localhost:5432/cdc KS MO TX VA ...
 ```
 
-Valid values for states are FIPS codes, postal abbreviations or names.
+Valid values for states are FIPS codes, postal abbreviations or names. Pass `+` to collect all states.
 
 # Options
 
@@ -30,8 +30,8 @@ Valid values for states are FIPS codes, postal abbreviations or names.
 Options:
   -t, --table TEXT               Name of table to create in DB. Default is
                                  "census_shapes".
-  -p, --temp TEXT                Temporary directory to download files to.
-                                 Default is "./shapefiles"
+  -p, --temp TEXT                Directory to download files to. Default is
+                                 "./shapefiles"
   -y, --year TEXT                Year. Default is "2016".
   -g, --geo [tract|group|block]  Geographic unit. Default is "tract".
   -s, --srid TEXT                Specify an SRID transform, e.g., "4269:4326".
