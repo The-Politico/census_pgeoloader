@@ -25,6 +25,7 @@ setup(
     ''',
     author='Jon McClure',
     author_email='jmcclure@politico.com',
+    license='GPLv3',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
