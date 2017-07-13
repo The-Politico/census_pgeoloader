@@ -19,7 +19,7 @@ $ pip install census_pgeoloader
 Pass a connection URI to your PostgreSQL database as well as the states you'd like to aggregate. This will dowload tract-level shapefiles by default.
 
 ```bash
-$ pgeoloader postgres://postgres@localhost:5432/cdc KS MO TX VA ...
+$ pgeoloader postgres://postgres@localhost:5432/database KS MO TX VA ...
 ```
 
 Valid values for states are FIPS codes, postal abbreviations or names. Pass `+` to collect all states.
